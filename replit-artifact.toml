@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "DEADLOCK"
+description = "A premium digital legacy and inheritance security platform for organizing digital assets, defining deterministic legacy policies, protecting instructions, and simulating controlled release workflows."
+version = "1.0.0"
+id = "artifacts/deadlock"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18460
+
+[services.development]
+run = "pnpm --filter @workspace/deadlock run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/deadlock", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/deadlock/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18460"
+BASE_PATH = "/"
